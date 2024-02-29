@@ -6,3 +6,13 @@ export const getAllTasks = async () => {
   const data = await response.json();
   return data;
 };
+
+export const updateTask = async (id, data) => {
+  return await fetch(`http://localhost:8080/tasks/${id}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .catch((error) => console.warn(error));
+};

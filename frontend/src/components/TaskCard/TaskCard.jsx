@@ -1,11 +1,39 @@
 import React, { useState } from "react";
 import EditTaskModal from "../EditTaskModal/EditTaskModal";
+import { updateTask } from "../../services/task-services";
 
-const TaskCard = ({ task }) => {
+const TaskCard = ({ task, fetchData }) => {
   const [modalShown, setModalShown] = useState(false);
 
-  const handleEdit = () => {
-    setModalShown(true);
+  const submitHandler = (data) => {
+    console.log(task);
+    const taskId = Number(task.id);
+    updateTask(taskId, data)
+      .then(() => setModalShown(false))
+      .catch((e) => console.error(e))
+      .finally(fetchData);
+  };
+
+  const handleDate = (date) => {
+    const formattedDate = date.split("T").join(" ");
+    return formattedDate;
+  };
+
+  const handlePriority = (priority) => {
+    switch (priority) {
+      case 1:
+        return "No Priority";
+      case 2:
+        return "Low Priority";
+      case 3:
+        return "Medium Priority";
+      case 4:
+        return "High Priority";
+      case 5:
+        return "Urgent";
+      default:
+        return "No Priority";
+    }
   };
 
   return (
@@ -13,11 +41,16 @@ const TaskCard = ({ task }) => {
       <div>
         <h3>{task.name}</h3>
         <p>{task.description}</p>
-        <p>{task.dueDate}</p>
-        <p>{task.priority}</p>
-        <button onClick={handleEdit}>Edit</button>
+        <p>{handleDate(task.dueDate)}</p>
+        <p>{handlePriority(task.priority)}</p>
+        <button onClick={() => setModalShown(true)}>Edit</button>
       </div>
-      <EditTaskModal modalShown={modalShown} setModalShown={setModalShown} />
+      <EditTaskModal
+        modalShown={modalShown}
+        setModalShown={setModalShown}
+        task={task}
+        submitHandler={submitHandler}
+      />
     </div>
   );
 };
