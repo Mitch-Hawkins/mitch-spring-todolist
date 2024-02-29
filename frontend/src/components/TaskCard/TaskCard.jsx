@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import EditTaskModal from "../EditTaskModal/EditTaskModal";
-import { updateTask } from "../../services/task-services";
+import { deleteTask, updateTask } from "../../services/task-services";
 
 const TaskCard = ({ task, fetchData }) => {
   const [modalShown, setModalShown] = useState(false);
@@ -36,6 +36,14 @@ const TaskCard = ({ task, fetchData }) => {
     }
   };
 
+  const handleDelete = () => {
+    const taskId = Number(task.id);
+    deleteTask(taskId)
+      .then(console.log("Delete Successful!"))
+      .catch((e) => console.error(e))
+      .finally(fetchData);
+  };
+
   return (
     <div>
       <div>
@@ -44,6 +52,7 @@ const TaskCard = ({ task, fetchData }) => {
         <p>{handleDate(task.dueDate)}</p>
         <p>{handlePriority(task.priority)}</p>
         <button onClick={() => setModalShown(true)}>Edit</button>
+        <button onClick={handleDelete}>Delete</button>
       </div>
       <EditTaskModal
         modalShown={modalShown}

@@ -16,3 +16,9 @@ export const updateTask = async (id, data) => {
     .then((response) => response.json())
     .catch((error) => console.warn(error));
 };
+
+export const deleteTask = async (id) => {
+  return await fetch(`http://localhost:8080/tasks/${id}`, { method: "DELETE" })
+    .then((res) => console.log(res))
+    .catch(() => false);
+};
