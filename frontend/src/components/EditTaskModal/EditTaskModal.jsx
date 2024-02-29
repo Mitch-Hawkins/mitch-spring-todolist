@@ -1,7 +1,21 @@
 import React, { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 
-const EditTaskModal = ({ modalShown, setModalShown, task, submitHandler }) => {
+const defaultTask = {
+  name: "",
+  description: "",
+  date: "",
+  priority: 1,
+};
+
+const EditTaskModal = ({
+  modalShown,
+  setModalShown,
+  modalMethod,
+  modalData,
+  task = defaultTask,
+  submitHandler,
+}) => {
   const dialogRef = useRef(null);
   const { handleSubmit, register } = useForm();
 
@@ -18,7 +32,7 @@ const EditTaskModal = ({ modalShown, setModalShown, task, submitHandler }) => {
     <div>
       <dialog ref={dialogRef}>
         <header>
-          <h3>{task.name}</h3>
+          <h3>{modalMethod} Task</h3>
           <button onClick={() => setModalShown(false)}>X</button>
         </header>
         <form onSubmit={handleSubmit(submitHandler)}>

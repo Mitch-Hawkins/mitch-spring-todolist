@@ -3,16 +3,16 @@ import EditTaskModal from "../EditTaskModal/EditTaskModal";
 import { deleteTask, updateTask } from "../../services/task-services";
 
 const TaskCard = ({ task, fetchData }) => {
-  const [modalShown, setModalShown] = useState(false);
+  //   const [modalShown, setModalShown] = useState(false);
 
-  const submitHandler = (data) => {
-    console.log(task);
-    const taskId = Number(task.id);
-    updateTask(taskId, data)
-      .then(() => setModalShown(false))
-      .catch((e) => console.error(e))
-      .finally(fetchData);
-  };
+  //   const submitHandler = (data) => {
+  //     console.log(task);
+  //     const taskId = Number(task.id);
+  //     updateTask(taskId, data)
+  //       .then(() => setModalShown(false))
+  //       .catch((e) => console.error(e))
+  //       .finally(fetchData);
+  //   };
 
   const handleDate = (date) => {
     const formattedDate = date.split("T").join(" ");
@@ -36,13 +36,13 @@ const TaskCard = ({ task, fetchData }) => {
     }
   };
 
-  const handleDelete = () => {
-    const taskId = Number(task.id);
-    deleteTask(taskId)
-      .then(console.log("Delete Successful!"))
-      .catch((e) => console.error(e))
-      .finally(fetchData);
-  };
+  //   const handleDelete = () => {
+  //     const taskId = Number(task.id);
+  //     deleteTask(taskId)
+  //       .then(console.log("Delete Successful!"))
+  //       .catch((e) => console.error(e))
+  //       .finally(fetchData);
+  //   };
 
   return (
     <div>
@@ -51,15 +51,15 @@ const TaskCard = ({ task, fetchData }) => {
         <p>{task.description}</p>
         <p>{handleDate(task.dueDate)}</p>
         <p>{handlePriority(task.priority)}</p>
-        <button onClick={() => setModalShown(true)}>Edit</button>
-        <button onClick={handleDelete}>Delete</button>
+        {/* <button onClick={() => setModalShown(true)}>Edit</button>
+        <button onClick={handleDelete}>Delete</button> */}
       </div>
-      <EditTaskModal
+      {/* <EditTaskModal
         modalShown={modalShown}
         setModalShown={setModalShown}
         task={task}
         submitHandler={submitHandler}
-      />
+      /> */}
     </div>
   );
 };
