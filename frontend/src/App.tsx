@@ -1,5 +1,5 @@
-import "./App.scss";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./App.scss";
 import TasksPage from "./pages/TasksPage/TasksPage";
 
 function App() {

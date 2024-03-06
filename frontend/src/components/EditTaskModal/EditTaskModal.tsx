@@ -1,32 +1,33 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
+import { ModalVariant, Task } from "../../pages/TasksPage/TasksPage";
 
-const defaultTask = {
-  name: "",
-  description: "",
-  date: "",
-  priority: 1,
-};
+interface EditTaskModalProps {
+  modalShown: boolean;
+  setModalShown: React.Dispatch<React.SetStateAction<boolean>>;
+  modalMethod: ModalVariant | null;
+  modalData: Task | null;
+  submitHandler: (data: Task) => void;
+}
 
 const EditTaskModal = ({
   modalShown,
   setModalShown,
   modalMethod,
   modalData,
-  task = defaultTask,
   submitHandler,
-}) => {
-  const dialogRef = useRef(null);
-  const { handleSubmit, register } = useForm();
+}: EditTaskModalProps) => {
+  const dialogRef = useRef<HTMLDialogElement | null>(null);
+  const { handleSubmit, register, reset } = useForm<Task>();
 
   useEffect(() => {
     const dialogElement = dialogRef.current;
-    if (modalShown) {
+    if (modalShown && dialogElement) {
       dialogElement.showModal();
-    } else {
+    } else if (dialogElement) {
       dialogElement.close();
     }
-  }, [modalShown]);
+  }, [modalShown, reset, modalData]);
 
   return (
     <div>
@@ -41,8 +42,7 @@ const EditTaskModal = ({
             <input
               type="text"
               id="name"
-              name="name"
-              defaultValue={task.name}
+              defaultValue={modalData?.name}
               {...register("name")}
             ></input>
           </div>
@@ -51,8 +51,7 @@ const EditTaskModal = ({
             <input
               type="text"
               id="description"
-              name="description"
-              defaultValue={task.description}
+              defaultValue={modalData?.description}
               {...register("description")}
             ></input>
           </div>
@@ -61,14 +60,13 @@ const EditTaskModal = ({
             <input
               type="datetime-local"
               id="date"
-              name="date"
-              defaultValue={task.description}
-              {...register("date")}
+              defaultValue={modalData?.dueDate}
+              {...register("dueDate")}
             ></input>
           </div>
           <div>
             <label htmlFor="priority">Task Priority: </label>
-            <select id="priority" name="priority" {...register("priority")}>
+            <select id="priority" {...register("priority")}>
               <option value={1}>No Priority</option>
               <option value={2}>Low Priority</option>
               <option value={3}>Medium Priority</option>
