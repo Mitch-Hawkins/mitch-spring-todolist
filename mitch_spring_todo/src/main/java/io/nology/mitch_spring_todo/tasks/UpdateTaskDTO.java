@@ -24,6 +24,7 @@ public class UpdateTaskDTO {
 
   @Pattern(
     regexp = "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$",
+    // regexp = "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}$",
     message = "Task due date must be formatted correctly"
   )
   private String dueDate;
