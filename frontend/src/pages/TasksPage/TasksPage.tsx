@@ -7,6 +7,7 @@ import {
 } from "../../services/task-services";
 import TaskCard from "../../components/TaskCard/TaskCard";
 import EditTaskModal from "../../components/EditTaskModal/EditTaskModal";
+import styles from "./TasksPage.module.scss";
 
 export enum ModalVariant {
   Create = "Create",
@@ -86,7 +87,7 @@ const TasksPage = () => {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <h1>TasksPage</h1>
       <div>
         <button onClick={handleAdd}>Add Task</button>
