@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,9 @@ public class TaskService {
   @Autowired
   private TaskRepository repo;
 
+  @Autowired
+  private ModelMapper mapper;
+
   public List<Task> getAll() {
     return this.repo.findAll();
   }
@@ -23,11 +27,7 @@ public class TaskService {
   }
 
   public Task createTask(@Valid CreateTaskDTO data) {
-    Task newTask = new Task();
-    newTask.setName(data.getName().trim());
-    newTask.setDescription(data.getDescription().trim());
-    newTask.setPriority(data.getPriority());
-    newTask.setDueDate(data.getDueDate());
+    Task newTask = mapper.map(data, Task.class);
     return this.repo.save(newTask);
   }
 
@@ -37,20 +37,10 @@ public class TaskService {
       return maybeTask;
     }
     Task foundTask = maybeTask.get();
-
-    if (data.getName() != null) {
-      foundTask.setName(data.getName().trim());
-    }
-    if (data.getDescription() != null) {
-      foundTask.setDescription(data.getDescription().trim());
-    }
-    if (data.getDueDate() != null) {
+    if (data.getDueDate() != null) { //Need to add this to modal
       foundTask.setDueDate(data.getDueDate());
     }
-    if (data.getPriority() < 1 || data.getPriority() > 5) {
-      foundTask.setPriority(data.getPriority());
-    }
-
+    mapper.map(data, foundTask);
     Task updated = this.repo.save(foundTask);
     return Optional.of(updated);
   }

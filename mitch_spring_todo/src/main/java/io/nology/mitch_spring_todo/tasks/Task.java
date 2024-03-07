@@ -14,6 +14,7 @@ public class Task {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column
   private Long id;
 
   @Column
@@ -30,6 +31,10 @@ public class Task {
 
   public Task() {
     super();
+  }
+
+  public Long getId() {
+    return id;
   }
 
   public String getName() {
