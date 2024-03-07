@@ -99,16 +99,20 @@ const TasksPage = () => {
                   onClick={() => {
                     handleEdit(tsk);
                   }}
+                  data-testid="Edit"
                 >
                   Edit
                 </button>
-                <button onClick={() => handleDelete(tsk)}>Delete</button>
+                <button onClick={() => handleDelete(tsk)} data-testid="Delete">
+                  Delete
+                </button>
               </>
             );
           })}
       </div>
       {modalShown && (
         <EditTaskModal
+          data-testid="EditTaskModal"
           modalShown={modalShown}
           setModalShown={setModalShown}
           modalMethod={modalMethod}

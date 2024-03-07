@@ -1,6 +1,6 @@
 import { Task } from "../../pages/TasksPage/TasksPage";
 
-interface TaskCardProps {
+export interface TaskCardProps {
   task: Task;
   fetchData: () => void;
 }
@@ -45,9 +45,9 @@ const TaskCard = ({ task }: TaskCardProps) => {
       <div>
         <h3>{task.name}</h3>
         <p>{task.description}</p>
-        <p>{handleDate(task.dueDate)}</p>
-        <p>{handleTime(task.dueDate)}</p>
-        <p>{handlePriority(task.priority)}</p>
+        <p data-testid="date">{handleDate(task.dueDate)}</p>
+        <p data-testid="time">{handleTime(task.dueDate)}</p>
+        <p data-testid="priority">{handlePriority(task.priority)}</p>
       </div>
     </div>
   );
