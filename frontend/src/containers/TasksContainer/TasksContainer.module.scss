@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 2px solid white;
+  border-radius: 15px;
+  background-color: #d8f3dc;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.329);
+  width: 70vw;
+  align-items: center;
+  padding-top: 70px;
+  padding-bottom: 35px;
+  margin-bottom: 100px;
+  transform: translateY(-55px);
+}
+
+.taskCardContainer {
+  display: flex;
+  justify-content: space-around;
+  border: 2px solid black;
+}
+
+.checked {
+  text-decoration: line-through;
+}

@@ -5,9 +5,11 @@ import {
   getAllTasks,
   updateTask,
 } from "../../services/task-services";
-import TaskCard from "../../components/TaskCard/TaskCard";
+// import TaskCard from "../../components/TaskCard/TaskCard";
 import EditTaskModal from "../../components/EditTaskModal/EditTaskModal";
 import styles from "./TasksPage.module.scss";
+import Header from "../../components/Header/Header";
+import TasksContainer from "../../containers/TasksContainer/TasksContainer";
 
 export enum ModalVariant {
   Create = "Create",
@@ -88,28 +90,20 @@ const TasksPage = () => {
 
   return (
     <div className={styles.container}>
-      <h1>TasksPage</h1>
+      <Header />
+      <div className={styles.addButtonContainer}>
+        <button onClick={handleAdd} className={styles.addButton}>
+          Add Task
+        </button>
+      </div>
       <div>
-        <button onClick={handleAdd}>Add Task</button>
-        {!loading &&
-          tasks.map((tsk) => {
-            return (
-              <>
-                <TaskCard key={tsk.id} task={tsk} fetchData={fetchData} />
-                <button
-                  onClick={() => {
-                    handleEdit(tsk);
-                  }}
-                  data-testid="Edit"
-                >
-                  Edit
-                </button>
-                <button onClick={() => handleDelete(tsk)} data-testid="Delete">
-                  Delete
-                </button>
-              </>
-            );
-          })}
+        <TasksContainer
+          loading={loading}
+          tasks={tasks}
+          fetchData={fetchData}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+        />
       </div>
       {modalShown && (
         <EditTaskModal
