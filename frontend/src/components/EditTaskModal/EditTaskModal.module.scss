@@ -18,7 +18,6 @@
   align-items: center;
   padding-left: 100px;
   padding-right: 100px;
-  //   border: 2px solid white;
   border-radius: 20px;
   background-color: #52b788;
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.295);
@@ -45,7 +44,6 @@
 .formWrapper {
   display: flex;
   flex-direction: column;
-  //   border: 2px solid red;
   width: 90%;
   height: 85%;
   gap: 20px;
@@ -70,7 +68,6 @@ select {
 
 .fieldWrapper {
   display: flex;
-  //   border: 2px solid black;
   justify-content: space-between;
 }
 

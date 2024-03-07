@@ -38,6 +38,7 @@ const TasksPage = () => {
   const [modalShown, setModalShown] = useState<boolean>(false);
   const [modalMethod, setModalMethod] = useState<ModalVariant | null>(null);
   const [modalData, setModalData] = useState<Task | null>(null);
+  // const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     fetchData();
@@ -47,7 +48,7 @@ const TasksPage = () => {
     setLoading(true);
     getAllTasks()
       .then((res) => setTasks(res))
-      .catch((e: Error) => console.warn(e.message))
+      .catch((e: Error) => console.error(e))
       .finally(() => setLoading(false));
   };
 
@@ -55,16 +56,18 @@ const TasksPage = () => {
     if (modalMethod == ModalVariant.Update) {
       const taskId = Number(modalData?.id);
       if (!isNaN(taskId)) {
+        setModalShown(false);
         updateTask(taskId, data)
-          .then(() => setModalShown(false))
-          .catch((e: Error) => console.error(e))
-          .finally(fetchData);
+          .then(fetchData)
+          .catch((e: Error) => console.error(e));
+        // .finally(() => setModalShown(false));
       }
     } else if (modalMethod == ModalVariant.Create) {
+      setModalShown(false);
       createTask(data)
-        .then(() => setModalShown(false))
-        .catch((e: Error) => console.error(e))
-        .finally(fetchData);
+        .then(fetchData)
+        .catch((e: Error) => console.error(e));
+      // .finally(() => setModalShown(false));
     }
   };
 
@@ -88,8 +91,10 @@ const TasksPage = () => {
       .finally(fetchData);
   };
 
+  // console.log(error);
+
   return (
-    <div className={styles.container}>
+    <div className={styles.container} data-testid="TasksPage">
       <Header />
       <div className={styles.addButtonContainer}>
         <button onClick={handleAdd} className={styles.addButton}>

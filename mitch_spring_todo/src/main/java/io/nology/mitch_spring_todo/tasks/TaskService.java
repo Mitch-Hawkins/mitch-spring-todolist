@@ -37,21 +37,9 @@ public class TaskService {
       return maybeTask;
     }
     Task foundTask = maybeTask.get();
-
-    // if (data.getName() != null) {
-    //   foundTask.setName(data.getName().trim());
-    // }
-    // if (data.getDescription() != null) {
-    //   foundTask.setDescription(data.getDescription().trim());
-    // }
-
-    if (data.getDueDate() != null) { //Need to add this to model
+    if (data.getDueDate() != null) { //Need to add this to modal
       foundTask.setDueDate(data.getDueDate());
     }
-    // if (data.getPriority() < 1 || data.getPriority() > 5) {
-    //   foundTask.setPriority(data.getPriority());
-    // }
-
     mapper.map(data, foundTask);
     Task updated = this.repo.save(foundTask);
     return Optional.of(updated);

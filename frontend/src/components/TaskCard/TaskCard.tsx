@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Task } from "../../pages/TasksPage/TasksPage";
-import styles from "./TaskCard.module.scss";
 import trashIcon from "../../assets/icons8-trash-25.png";
 import editIcon from "../../assets/icons8-edit-25.png";
+import styles from "./TaskCard.module.scss";
 
 export interface TaskCardProps {
   task: Task;

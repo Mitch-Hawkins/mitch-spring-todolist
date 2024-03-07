@@ -22,23 +22,29 @@ export const getAllTasks = async () => {
 };
 
 export const createTask = async (data: CreateTaskData) => {
-  return await fetch(`http://localhost:8080/tasks`, {
+  const response = await fetch(`http://localhost:8080/tasks`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
-  })
-    .then((res) => res.json())
-    .catch((error) => console.warn(error));
+  });
+  if (!response.ok) {
+    throw new Error("Failed to Create Task");
+  }
+
+  return await response.json();
 };
 
 export const updateTask = async (id: number, data: UpdateTaskData) => {
-  return await fetch(`http://localhost:8080/tasks/${id}`, {
+  const response = await fetch(`http://localhost:8080/tasks/${id}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
-  })
-    .then((response) => response.json())
-    .catch((error) => console.warn(error));
+  });
+  if (!response.ok) {
+    throw new Error("Failed to Update Task");
+  }
+
+  return await response.json();
 };
 
 export const deleteTask = async (id: number) => {

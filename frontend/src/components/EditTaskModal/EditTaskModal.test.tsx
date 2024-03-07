@@ -6,7 +6,7 @@ import { ModalVariant } from "../../pages/TasksPage/TasksPage";
 const mockTask = {
   id: 1,
   name: "Test",
-  description: "Lmao",
+  description: "Description",
   dueDate: "2000-01-01T12:00:00",
   priority: 3,
 };

@@ -19,14 +19,14 @@ const mockTasks = [
   {
     id: 1,
     name: "Test",
-    description: "Lmao",
+    description: "Description",
     dueDate: "2000-01-01T12:00:00",
     priority: 3,
   },
   // {
   //   id: 2,
   //   name: "Test",
-  //   description: "Lmao",
+  //   description: "Description",
   //   dueDate: "2000-01-01T12:00:00",
   //   priority: 3,
   // },
@@ -35,13 +35,13 @@ const mockTasks = [
 describe("Task Page componenst Tests", () => {
   it("should render without a fuss", () => {
     render(<TasksPage />);
-    const tasksPage = screen.getByText("TasksPage");
+    const tasksPage = screen.getByTestId("TasksPage");
     expect(tasksPage).toBeInTheDocument();
   });
 
   it("should open a modal when the add task button is clicked", async () => {
     const rendered = render(<TasksPage />);
-    const tasksPage = screen.getByText("TasksPage");
+    const tasksPage = screen.getByTestId("TasksPage");
     expect(tasksPage).toBeInTheDocument();
     const addButton = rendered.getByText("Add Task");
     const user = userEvent.setup();
@@ -50,7 +50,7 @@ describe("Task Page componenst Tests", () => {
   });
   it("should populate with backend tasks", async () => {
     const rendered = render(<TasksPage />);
-    const tasksPage = rendered.getByText("TasksPage");
+    const tasksPage = rendered.getByTestId("TasksPage");
     expect(tasksPage).toBeInTheDocument();
     await waitFor(() => {
       expect(getAllTasks).toHaveBeenCalled();

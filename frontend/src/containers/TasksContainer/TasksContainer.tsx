@@ -19,6 +19,7 @@ const TasksContainer = ({
 }: TasksContainerProps) => {
   return (
     <div className={styles.container}>
+      <>{tasks.length === 0 && <p>Nothing To Do! Try adding a task!</p>}</>
       {!loading &&
         tasks.map((tsk) => {
           return (
