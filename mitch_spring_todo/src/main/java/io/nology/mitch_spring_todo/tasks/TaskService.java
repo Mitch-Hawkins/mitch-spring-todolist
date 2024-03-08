@@ -1,12 +1,15 @@
 package io.nology.mitch_spring_todo.tasks;
 
+import io.nology.mitch_spring_todo.exceptions.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 @Service
 @Transactional
@@ -18,20 +21,37 @@ public class TaskService {
   @Autowired
   private ModelMapper mapper;
 
-  public List<Task> getAll() {
-    return this.repo.findAll();
+  public List<Task> getAll() throws Exception {
+    try {
+      return this.repo.findAll();
+    } catch (DataAccessException dataAccessException) {
+      throw new ResourceNotFoundException(
+        "Tasks",
+        "An error occured while fetching tasks"
+      );
+    } catch (Exception genericException) {
+      throw new Exception();
+    }
   }
 
-  public Optional<Task> findById(Long id) {
-    return this.repo.findById(id);
+  public Optional<Task> findById(Long id) throws Exception {
+    try {
+      return this.repo.findById(id);
+    } catch (DataAccessException dataAccessException) {
+      throw new ResourceNotFoundException("Tasks", id);
+    } catch (Exception genericException) {
+      throw new Exception();
+    }
   }
 
-  public Task createTask(@Valid CreateTaskDTO data) {
+  public Task createTask(@Valid CreateTaskDTO data)
+    throws MethodArgumentNotValidException {
     Task newTask = mapper.map(data, Task.class);
     return this.repo.save(newTask);
   }
 
-  public Optional<Task> updateById(@Valid UpdateTaskDTO data, Long id) {
+  public Optional<Task> updateById(@Valid UpdateTaskDTO data, Long id)
+    throws Exception {
     Optional<Task> maybeTask = this.findById(id);
     if (maybeTask.isEmpty()) {
       return maybeTask;
