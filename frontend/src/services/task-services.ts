@@ -13,38 +13,65 @@ interface CreateTaskData {
 }
 
 export const getAllTasks = async () => {
-  const response = await fetch("http://localhost:8080/tasks");
-  if (!response.ok) {
-    throw new Error("Failed to get tasks");
+  try {
+    const response = await fetch("http://localhost:8080/tasks");
+    if (!response.ok) {
+      throw new Error(
+        "Failed to get tasks" + `${response.status} ${response.statusText}`
+      );
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    if (error instanceof TypeError && error.message === "Failed to fetch") {
+      throw new Error("There was a network error. Please try again later!");
+    }
+    throw error;
   }
-  const data = await response.json();
-  return data;
 };
 
 export const createTask = async (data: CreateTaskData) => {
-  const response = await fetch(`http://localhost:8080/tasks`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
-  if (!response.ok) {
-    throw new Error("Failed to Create Task");
-  }
+  try {
+    const response = await fetch(`http://localhost:8080/tasks`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      throw new Error(
+        "Failed to Create Task " + `${response.status} ${response.statusText}`
+      );
+    }
 
-  return await response.json();
+    return await response.json();
+  } catch (error) {
+    if (error instanceof TypeError && error.message === "Failed to fetch") {
+      throw new Error("There was a network error. Please try again later!");
+    }
+    throw error;
+  }
 };
 
 export const updateTask = async (id: number, data: UpdateTaskData) => {
-  const response = await fetch(`http://localhost:8080/tasks/${id}`, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
-  if (!response.ok) {
-    throw new Error("Failed to Update Task");
-  }
+  try {
+    const response = await fetch(`http://localhost:8080/tasks/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      throw new Error(
+        "Failed to Update Task " + `${response.status} ${response.statusText}`
+      );
+    }
 
-  return await response.json();
+    return await response.json();
+  } catch (error) {
+    if (error instanceof TypeError && error.message === "Failed to fetch") {
+      throw new Error("There was a network error. Please try again later!");
+    }
+    throw error;
+  }
 };
 
 export const deleteTask = async (id: number) => {
